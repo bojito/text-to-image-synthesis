@@ -1,8 +1,6 @@
 import torch
 import torch.nn as nn
 
-from fixed_rnn import fixed_rnn
-
 class fixed_rnn(nn.Module):
     '''
     Custom RNN that matches the implementation provided by Reed et al.

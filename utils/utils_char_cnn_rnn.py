@@ -2,7 +2,7 @@ import random
 import torch
 import torchfile
 
-from text_to_image.char_cnn_rnn import char_cnn_rnn
+from models.char_cnn_rnn import char_cnn_rnn
 
 
 def rng_init(seed):
@@ -29,14 +29,10 @@ def extract_char_cnn_rnn_weights(model_path, dataset, model_type):
     Extracts weights from Char-CNN-RNN models built using Torch into
     PyTorch-compatible weights.
     '''
-    assert dataset in ['birds', 'flowers'], \
-            'Dataset must be (birds|flowers)'
-    assert model_type in ['cvpr', 'icml'], \
-            'Dataset must be (cvpr|icml)'
 
     model_torch = torchfile.load(model_path)
     enc_doc = model_torch[b'protos'][b'enc_doc']
-    model_pytorch = char_cnn_rnn(dataset, model_type)
+    model_pytorch = char_cnn_rnn()
 
     # convolutional segment
     # Torch storage for TemporalConvolution weights:
@@ -61,35 +57,13 @@ def extract_char_cnn_rnn_weights(model_path, dataset, model_type):
 
     # recurrent segment
     rnn = enc_doc.modules[3]
-    if model_type == 'cvpr' or dataset == 'flowers':
-        rnn_i2h = rnn.modules[1].modules[0]
-        model_pytorch.rnn.i2h.weight.data = torch.Tensor(rnn_i2h.weight)
-        model_pytorch.rnn.i2h.bias.data = torch.Tensor(rnn_i2h.bias)
-        rnn_h2h = rnn.modules[5].modules[0]
-        model_pytorch.rnn.h2h.weight.data = torch.Tensor(rnn_h2h.weight)
-        model_pytorch.rnn.h2h.bias.data = torch.Tensor(rnn_h2h.bias)
-    elif model_type == 'icml':
-        rnn_i2h = rnn.modules[1].modules[0]
-        model_pytorch.rnn.i2h.weight.data = torch.Tensor(rnn_i2h.weight)
-        model_pytorch.rnn.i2h.bias.data = torch.Tensor(rnn_i2h.bias)
-
-        rnn_i2h_update = rnn.modules[4].modules[0]
-        model_pytorch.rnn.i2h_update.weight.data = torch.Tensor(rnn_i2h_update.weight)
-        model_pytorch.rnn.i2h_update.bias.data = torch.Tensor(rnn_i2h_update.bias)
-        rnn_h2h_update = rnn.modules[5].modules[0]
-        model_pytorch.rnn.h2h_update.weight.data = torch.Tensor(rnn_h2h_update.weight)
-        model_pytorch.rnn.h2h_update.bias.data = torch.Tensor(rnn_h2h_update.bias)
-
-        rnn_i2h_reset = rnn.modules[9].modules[0]
-        model_pytorch.rnn.i2h_reset.weight.data = torch.Tensor(rnn_i2h_reset.weight)
-        model_pytorch.rnn.i2h_reset.bias.data = torch.Tensor(rnn_i2h_reset.bias)
-        rnn_h2h_reset = rnn.modules[10].modules[0]
-        model_pytorch.rnn.h2h_reset.weight.data = torch.Tensor(rnn_h2h_reset.weight)
-        model_pytorch.rnn.h2h_reset.bias.data = torch.Tensor(rnn_h2h_reset.bias)
-
-        rnn_h2h = rnn.modules[14].modules[0]
-        model_pytorch.rnn.h2h.weight.data = torch.Tensor(rnn_h2h.weight)
-        model_pytorch.rnn.h2h.bias.data = torch.Tensor(rnn_h2h.bias)
+    
+    rnn_i2h = rnn.modules[1].modules[0]
+    model_pytorch.rnn.i2h.weight.data = torch.Tensor(rnn_i2h.weight)
+    model_pytorch.rnn.i2h.bias.data = torch.Tensor(rnn_i2h.bias)
+    rnn_h2h = rnn.modules[5].modules[0]
+    model_pytorch.rnn.h2h.weight.data = torch.Tensor(rnn_h2h.weight)
+    model_pytorch.rnn.h2h.bias.data = torch.Tensor(rnn_h2h.bias)
 
     # embedding projection
     emb_proj = enc_doc.modules[5]
