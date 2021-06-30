@@ -9,4 +9,4 @@
 </p>
 
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/bojito/text-to-image-synthesis/blob/main/1_Text_Embed.ipynb)
+[![1_Text_Embed](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/bojito/text-to-image-synthesis/blob/main/1_Text_Embed.ipynb)
