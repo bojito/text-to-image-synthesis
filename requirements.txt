@@ -1,0 +1,9 @@
+torch
+torchfile
+numpy
+matplotlib
+torchvision
+pillow
+scipy 
+h5py
+pdb
