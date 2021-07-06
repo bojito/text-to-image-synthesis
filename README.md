@@ -19,7 +19,7 @@ Based on [2], we use these embeddings to condition a `DCGAN` on generating new a
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/bojito/ml-album-popularity.git
+   git clone https://github.com/bojito/text-to-image-synthesis
    ```
 2. Install requirements  
    ```sh
