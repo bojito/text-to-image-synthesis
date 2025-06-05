@@ -13,7 +13,7 @@ This is a PyTorch implementation of an end to end Text to Image synthesis applic
 
 Based on [1], we train a `Char CNN-RNN` to extract useful text embeddings from (image, captions) pairs. 
 
-Based on [2], we use these embeddings to condition a `DCGAN` on generating new and previous unseen images of the same domain, given a custom text description written by a human.
+Based on [2], we use these embeddings to condition a `DCGAN` on generating new and previously unseen images of the same domain, given a custom text description written by a human.
 ## Installation
 
 
